@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../db/connection'); // Import the database connection
 
+//dev 2
+
 // Route to fetch data from the database
 router.get('/data', async (req, res) => {
   try {
