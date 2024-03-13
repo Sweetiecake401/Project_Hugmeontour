@@ -3,6 +3,7 @@ const app = express();
 const mariadb = require("mariadb");
 const cors = require("cors");
 require("dotenv").config();
+const path = require('path');
 
 // Middleware to parse JSON bodies
 app.use(cors());
@@ -24,6 +25,39 @@ app.connect(function (err) {
   }
 });
 
+pool
+  .getConnection()
+
+  .then((conn) => {
+    console.log("Database connected");
+  })
+  .catch((err) => {
+    //not connected
+
+    console.log("Cannot connect to database", err);
+  });
+
+// Route to fetch data from the database
+
+const public = path.join(__dirname, "public");
+
+app.use(express.static(public));
+
+app.get("/", (req, res) => {
+  // home page
+
+  res.send({
+    message: "main page",
+  });
+});
+
+app.get("/api/read", (req, res) => {
+  // backend operations
+
+  res.send({
+    message: "perform read on database",
+  });
+});
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
